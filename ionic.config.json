@@ -1,6 +1,8 @@
 {
   "name": "nativecards-ionic",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular",
   "id": "e032b97b"
 }
