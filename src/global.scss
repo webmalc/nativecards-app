@@ -12,6 +12,16 @@
 
 @import 'theme/fonts.scss';
 
+/** content **/
+@media only screen and (min-width: 1200px) {
+  ion-content {
+    --padding-top: var(--padding-md);
+    --padding-bottom: var(--padding-md);
+    --padding-end: var(--padding-md);
+    --padding-start: var(--padding-md);
+  }
+}
+
 /** toolbar **/
 ion-toolbar {
   --background: var(--ion-color-dark);
