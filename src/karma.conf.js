@@ -11,7 +11,8 @@ module.exports = function(config) {
       require('karma-firefox-launcher'),
       require('karma-jasmine-html-reporter'),
       require('karma-coverage-istanbul-reporter'),
-      require('@angular-devkit/build-angular/plugins/karma')
+      require('@angular-devkit/build-angular/plugins/karma'),
+      require('karma-jasmine-diff-reporter'),
     ],
     client: {
       clearContext: false // leave Jasmine Spec Runner output visible in browser
@@ -21,7 +22,7 @@ module.exports = function(config) {
       reports: ['html', 'lcovonly', 'text-summary'],
       fixWebpackSourcePaths: true
     },
-    reporters: ['progress', 'kjhtml'],
+    reporters: ['jasmine-diff', 'progress', 'kjhtml'],
     port: 9876,
     colors: true,
 

@@ -88,6 +88,12 @@ ion-card-header {
 ion-menu {
   --background: var(--ion-color-dark-shade);
 
+  ion-title {
+    a {
+      text-decoration: none;
+    }
+  }
+
   ion-content,
   ion-list,
   ion-item,
