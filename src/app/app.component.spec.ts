@@ -1,17 +1,18 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { TestBed, async } from '@angular/core/testing';
-
-import { Platform } from '@ionic/angular';
+import { Platform, Events } from '@ionic/angular';
+import { RouterTestingModule } from '@angular/router/testing';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { AuthService } from './core/auth.service';
-import { RouterTestingModule } from '@angular/router/testing';
+import { TestBed, async } from '@angular/core/testing';
 
+import { AuthService } from './core/auth.service';
 import { AppComponent } from './app.component';
+
 
 describe('AppComponent', () => {
 
-  let statusBarSpy, splashScreenSpy, platformReadySpy, platformSpy, authSpy;
+  let statusBarSpy, splashScreenSpy, events;
+  let platformReadySpy, platformSpy, authSpy;
 
   beforeEach(async(() => {
     statusBarSpy = jasmine.createSpyObj('StatusBar', ['styleDefault']);
@@ -19,6 +20,7 @@ describe('AppComponent', () => {
     platformReadySpy = Promise.resolve();
     platformSpy = jasmine.createSpyObj('Platform', { ready: platformReadySpy });
     authSpy = jasmine.createSpyObj('AuthService', { 'isAuthenticated': true });
+    events = jasmine.createSpyObj('Events', { 'subscribe': true });
 
     TestBed.configureTestingModule({
       declarations: [AppComponent],
@@ -27,7 +29,8 @@ describe('AppComponent', () => {
         { provide: StatusBar, useValue: statusBarSpy },
         { provide: SplashScreen, useValue: splashScreenSpy },
         { provide: Platform, useValue: platformSpy },
-        { provide: AuthService, useValue: authSpy }
+        { provide: AuthService, useValue: authSpy },
+        { provide: Events, useValue: events },
       ],
       imports: [RouterTestingModule.withRoutes([])],
     }).compileComponents();
@@ -80,4 +83,15 @@ describe('AppComponent', () => {
     expect(menu.getAttribute('disabled')).toEqual('true');
   });
 
+  it('should listen to user login/logout event', async () => {
+    events.subscribe = jasmine.createSpy().and.callFake(
+      function (id: string, func: () => void) {
+        func();
+        return id;
+      });
+    TestBed.overrideProvider(Events, { useValue: events });
+    const fixture = await TestBed.createComponent(AppComponent);
+    await fixture.detectChanges();
+    expect(authSpy.isAuthenticated.calls.all().length).toEqual(2);
+  });
 });

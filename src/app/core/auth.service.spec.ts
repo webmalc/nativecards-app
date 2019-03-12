@@ -9,4 +9,9 @@ describe('AuthService', () => {
     const service: AuthService = TestBed.get(AuthService);
     expect(service).toBeTruthy();
   });
+
+  it('should return authentication status', () => {
+    const service: AuthService = TestBed.get(AuthService);
+    expect(service.isAuthenticated()).toEqual(true);
+  });
 });
