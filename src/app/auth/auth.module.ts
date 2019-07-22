@@ -10,8 +10,13 @@ import { LoginPage } from './login.page';
 const routes: Routes = [
   {
     path: '',
+    redirectTo: 'login',
+    pathMatch: 'full'
+  },
+  {
+    path: 'login',
     component: LoginPage
-  }
+  },
 ];
 
 @NgModule({
@@ -23,4 +28,4 @@ const routes: Routes = [
   ],
   declarations: [LoginPage]
 })
-export class LoginPageModule {}
+export class AuthModule { }

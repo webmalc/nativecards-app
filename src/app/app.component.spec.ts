@@ -5,7 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { TestBed, async } from '@angular/core/testing';
 
-import { AuthService } from './core/auth.service';
+import { AuthService } from './core/auth/auth.service';
 import { AppComponent } from './app.component';
 
 
@@ -85,7 +85,7 @@ describe('AppComponent', () => {
 
   it('should listen to user login/logout event', async () => {
     events.subscribe = jasmine.createSpy().and.callFake(
-      function (id: string, func: () => void) {
+      function(id: string, func: () => void) {
         func();
         return id;
       });
